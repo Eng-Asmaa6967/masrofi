@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دفتر حساباتي</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#061418">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="دفتر حساباتي">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#061418;--glow1:rgba(217,184,108,.16);--glow2:rgba(46,150,120,.18);--surface:rgba(16,40,45,.72);--ink:#F3EDDF;--mute:#93ABA7;--line:rgba(217,184,108,.2);--gold:#D9B86C;--gold2:#F6E3A8;--gold3:#B38A3A;--in:#66D9A8;--buy:#F59478;--lent:#EBCB7C;--field:rgba(5,18,21,.7);--star:%23D9B86C;color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#EAF1EE;--glow1:rgba(168,129,44,.16);--glow2:rgba(46,150,120,.16);--surface:rgba(255,255,255,.8);--ink:#10292B;--mute:#587270;--line:rgba(143,106,32,.25);--gold:#A8812C;--in:#1B7A52;--buy:#B4472F;--lent:#8A6A1E;--field:rgba(240,246,243,.9);--star:%23A8812C;color-scheme:light}}
+:root[data-theme="light"]{--bg:#EAF1EE;--glow1:rgba(168,129,44,.16);--glow2:rgba(46,150,120,.16);--surface:rgba(255,255,255,.8);--ink:#10292B;--mute:#587270;--line:rgba(143,106,32,.25);--gold:#A8812C;--in:#1B7A52;--buy:#B4472F;--lent:#8A6A1E;--field:rgba(240,246,243,.9);--star:%23A8812C;color-scheme:light}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:'Tajawal',system-ui,sans-serif;font-size:16px;line-height:1.65;
+ background:
+ radial-gradient(520px 380px at 95% 0%,var(--glow1),transparent 70%),
+ radial-gradient(560px 420px at 0% 38%,var(--glow2),transparent 70%),
+ radial-gradient(500px 360px at 90% 90%,var(--glow1),transparent 70%),
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M36 6l8 20 20 8-20 8-8 20-8-20-20-8 20-8z' fill='none' stroke='var(--star)' stroke-opacity='.09'/%3E%3Ccircle cx='36' cy='34' r='3' fill='none' stroke='var(--star)' stroke-opacity='.09'/%3E%3C/svg%3E"),
+ var(--bg);background-attachment:fixed}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px 70px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+.hi{font-size:14px;color:var(--mute)}
+h1{font-family:'Reem Kufi','Tajawal',sans-serif;font-weight:700;font-size:28px;margin:0;line-height:1.3}
+h1::after{content:"";display:block;width:56px;height:2px;margin-top:6px;background:linear-gradient(90deg,var(--gold),transparent)}
+.tg{font:inherit;font-size:20px;line-height:1;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;backdrop-filter:blur(10px)}
+
+.card{position:relative;border-radius:28px;padding:28px 24px 0;color:#F4EBD3;overflow:hidden;background:
+ radial-gradient(420px 240px at 0% 0%,rgba(246,227,168,.2),transparent 62%),
+ repeating-radial-gradient(circle at 100% 100%,rgba(217,184,108,.08) 0 1px,transparent 1px 12px),
+ linear-gradient(150deg,#0D3036,#061418 72%);
+ box-shadow:0 0 0 1px rgba(217,184,108,.55),0 30px 60px -22px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.1)}
+.card::before{content:"💎";position:absolute;top:18px;left:20px;font-size:26px;opacity:.9}
+.card small{opacity:.75;font-size:14px}
+.bal{font-family:'Reem Kufi','Tajawal',sans-serif;font-weight:700;font-size:clamp(44px,14vw,66px);line-height:1.15;direction:ltr;text-align:right;background:linear-gradient(180deg,#FFF3CC,#D9B86C 58%,#B38A3A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bal i{font-style:normal;font-size:.36em;margin-inline-end:8px}
+.prop{display:flex;height:6px;border-radius:6px;overflow:hidden;margin-top:18px;background:rgba(255,255,255,.1)}
+.prop span{transition:width .7s ease}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);margin:22px -24px 0;background:rgba(0,0,0,.3);border-top:1px solid rgba(217,184,108,.28)}
+.strip div{padding:15px 6px;text-align:center}
+.strip div+div{border-inline-start:1px solid rgba(217,184,108,.18)}
+.strip b{display:block;font-size:18px;direction:ltr}
+.strip small{font-size:13px}
+.c-in{color:#86E8BC}.c-buy{color:#FFA68D}.c-lent{color:#EFD38B}
+
+.panel{margin-top:20px;border-radius:24px;padding:20px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 40px -26px rgba(0,0,0,.7)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:var(--field);padding:5px;border-radius:16px;border:1px solid var(--line)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{text-align:center;padding:10px 2px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;color:var(--mute);transition:background .2s,color .2s;line-height:1.3}
+.seg label b{display:block;font-size:20px;font-weight:400}
+.seg input:checked+label{background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,var(--gold3));color:#07161A}
+.seg input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.f{display:grid;gap:14px;margin-top:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label.t{display:block;font-size:13.5px;color:var(--mute);margin-bottom:5px}
+input[type=text],input[type=number],input[type=date]{width:100%;font:inherit;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--field);color:var(--ink)}
+input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(217,184,108,.2)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips button{font:inherit;font-size:13.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--field);color:var(--ink);cursor:pointer}
+.chips button.on{border-color:var(--gold);background:rgba(217,184,108,.18);color:var(--gold)}
+.go{font:inherit;font-weight:800;font-size:17px;padding:15px;border:0;border-radius:16px;cursor:pointer;color:#07161A;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3));box-shadow:0 12px 26px -10px rgba(217,184,108,.65)}
+.go:active{transform:scale(.99)}
+
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:26px 0 12px;padding-bottom:4px}
+.tabs button{font:inherit;font-weight:700;font-size:14.5px;white-space:nowrap;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--mute);cursor:pointer}
+.tabs button.on{color:var(--gold);border-color:var(--gold);background:rgba(217,184,108,.12)}
+.sum{display:flex;justify-content:space-between;align-items:baseline;padding:4px 6px 10px;color:var(--mute);font-size:14.5px}
+.sum b{color:var(--ink);font-size:18px;direction:ltr}
+.grp{margin-top:18px}
+.gh{display:flex;align-items:center;gap:10px;padding:0 4px 9px;font-weight:800}
+.gh span{flex:1}
+.gh em{font-style:normal;color:var(--lent);direction:ltr}
+.av,.ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.av{font-family:'Reem Kufi',sans-serif;font-weight:700;font-size:18px;color:#07161A;background:linear-gradient(145deg,var(--gold2),var(--gold3))}
+.gh .av{width:36px;height:36px;font-size:15px}
+.ic{font-size:21px;border:1px solid var(--line);background:var(--field)}
+.it{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border-radius:18px;padding:13px 14px;margin-bottom:9px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.it .w{font-weight:700;word-break:break-word}
+.it .m{font-size:13px;color:var(--mute)}
+.amt{font-weight:800;font-size:17px;direction:ltr;text-align:left}
+.k-in .amt{color:var(--in)}.k-buy .amt{color:var(--buy)}.k-lent .amt{color:var(--lent)}
+.paid .w,.paid .amt{text-decoration:line-through;opacity:.5}
+.act{display:flex;gap:6px;grid-column:2/4}
+.act button{font:inherit;font-size:12.5px;padding:3px 11px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
+.empty{text-align:center;color:var(--mute);padding:36px 10px;border:1px dashed var(--line);border-radius:20px;background:var(--surface)}
+.empty b{display:block;font-size:34px;font-weight:400}
+.foot{text-align:center;margin-top:30px}
+.foot button{font:inherit;font-size:13px;padding:8px 14px;border:0;background:transparent;color:var(--mute);cursor:pointer;text-decoration:underline}
+.tools{margin-top:30px;border-radius:22px;padding:16px;background:var(--surface);border:1px solid var(--line);display:grid;gap:10px}
+.tools h2{font-family:'Reem Kufi',sans-serif;font-size:18px;margin:0 0 2px}
+.tools button,.tools .lbl{font:inherit;font-weight:700;font-size:14.5px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);cursor:pointer;text-align:center}
+.tools .pri{background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,var(--gold3));color:#07161A;border:0}
+.tools .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tools .chk{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--mute)}
+.tools .chk input{width:20px;height:20px;accent-color:var(--gold)}
+.tools .hint{font-size:13px;color:var(--mute);margin:0}
+.foot{margin-top:14px}
+.tools{margin-top:30px;border-radius:22px;padding:16px;background:var(--surface);border:1px solid var(--line);display:grid;gap:10px}
+.tools h2{font-family:'Reem Kufi',sans-serif;font-size:18px;margin:0 0 2px}
+.tools button{font:inherit;font-weight:700;font-size:14.5px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);cursor:pointer}
+.tools .pri{background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,var(--gold3));color:#07161A;border:0}
+.tools textarea{width:100%;font:inherit;font-size:13px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--field);color:var(--ink);direction:ltr;resize:vertical}
+.tools .hint{font-size:13px;color:var(--mute);margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div><div class="hi" id="hi"></div><h1>✨ دفتر حساباتي</h1></div><button class="tg" id="theme" aria-label="تبديل الوضع">🌗</button></div>
+
+<section class="card">
+  <small>الرصيد الصافي</small>
+  <div class="bal" id="bal">0</div>
+  <div class="prop" aria-hidden="true"><span id="pIn" style="background:#66D9A8;width:0"></span><span id="pBuy" style="background:#F59478;width:0"></span><span id="pLent" style="background:#EBCB7C;width:0"></span></div>
+  <div class="strip">
+    <div><b class="c-in" id="sIn">0</b><small>💰 دخل</small></div>
+    <div><b class="c-buy" id="sBuy">0</b><small>🛍️ مشتريات</small></div>
+    <div><b class="c-lent" id="sLent">0</b><small>🤝 عند الناس</small></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="seg" role="radiogroup" aria-label="نوع العملية">
+    <input type="radio" name="type" id="t-lent" value="lent" checked><label for="t-lent"><b>🤝</b>واحد أخد مني</label>
+    <input type="radio" name="type" id="t-in" value="in"><label for="t-in"><b>💰</b>دخل فلوس</label>
+    <input type="radio" name="type" id="t-buy" value="buy"><label for="t-buy"><b>🛍️</b>مشتريات</label>
+  </div>
+  <div class="f">
+    <div class="row2">
+      <div><label class="t" for="amt">المبلغ (ج)</label><input id="amt" type="number" inputmode="decimal" min="0" step="any" placeholder="200"></div>
+      <div><label class="t" for="date">التاريخ</label><input id="date" type="date"></div>
+    </div>
+    <div id="whoBox"><label class="t" for="who">اسم الشخص</label><input id="who" type="text" placeholder="أحمد" autocomplete="off"></div>
+    <div id="chipBox"><label class="t">التصنيف</label><div class="chips" id="chips"></div></div>
+    <div><label class="t" for="why">السبب</label><input id="why" type="text" autocomplete="off"></div>
+    <button class="go" id="save">💾 حفظ العملية</button>
+  </div>
+</section>
+
+<div class="tabs" id="tabs">
+  <button data-f="all" class="on">📒 الكل</button>
+  <button data-f="lent">🤝 السلف</button>
+  <button data-f="in">💰 الدخل</button>
+  <button data-f="buy">🛍️ المشتريات</button>
+</div>
+<div id="list"></div>
+<section class="tools">
+  <h2>🧰 الأدوات</h2>
+  <button class="pri" id="inst" hidden>📲 تثبيت التطبيق على الجهاز</button>
+  <p class="hint" id="iosHint" hidden>في الآيفون: اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية».</p>
+  <label class="chk"><input type="checkbox" id="auto"> 💾 تنزيل ملف الداتا تلقائيا مع كل تعديل</label>
+  <div class="two"><button id="exp">📤 تصدير نسخة</button><label class="lbl" for="imp">📥 استيراد نسخة</label></div>
+  <input type="file" id="imp" accept=".json,application/json" hidden>
+  <p class="hint">الملف بيتحفظ باسم masrofi-backup.json في تنزيلات الجهاز.</p>
+</section>
+<section class="tools" id="xfer">
+  <h2>🔁 نقل البيانات</h2>
+  <button class="pri" id="cp">📋 نسخ بياناتي</button>
+  <textarea id="ta" rows="3" placeholder="الصق هنا البيانات اللي نسختها من النسخة التانية"></textarea>
+  <button id="pasteImp">📥 استيراد من النص</button>
+  <p class="hint">انسخ من النسخة القديمة، وافتح النسخة الجديدة، والصق واضغط استيراد. العمليات المكررة بتتتجاهل.</p>
+</section>
+<div class="foot"><button id="wipe">مسح كل البيانات</button></div>
+</div>
+
+<script>
+(function(){
+var KEY='masrofi_v1',items=[],filter='all',shown=0,cat='';
+var $=function(i){return document.getElementById(i)};
+function load(){try{items=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){items=[]}}
+var AK='masrofi_auto';
+function autoOn(){try{return localStorage.getItem(AK)!=='0'}catch(e){return true}}
+function backup(){try{var b=new Blob([JSON.stringify({app:'masrofi',v:1,at:new Date().toISOString(),items:items},null,1)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='masrofi-backup.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},3000)}catch(e){}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}if(autoOn())backup()}
+function n(v){return (Math.round(v*100)/100).toLocaleString('en-US')}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+var names={lent:'سلف',in:'دخل',buy:'مشتريات'},dflt={lent:'🤝',in:'💰',buy:'🛍️'};
+var cats={
+ buy:[['🍽️','أكل'],['🛒','بقالة'],['⛽','بنزين'],['👕','ملابس'],['🏠','البيت'],['💊','صحة'],['📱','اشتراكات'],['🎁','هدايا']],
+ in:[['💼','شغل'],['💵','تحصيل'],['📈','أرباح'],['🎁','هدية'],['🏦','مرتب']]
+};
+var ph={lent:'سلفة لحد آخر الشهر',in:'مرتب أو تحصيل',buy:'بنزين أو سوبرماركت'};
+
+(function(){var h=new Date().getHours();$('hi').textContent=h<5||h>=18?'مساء الخير 🌙':(h<12?'صباح الخير ☀️':'نهارك سعيد 🌤️')})();
+
+function row(x){
+  var lead=x.type==='lent'?'<div class="av">'+esc((x.who||'؟').trim().charAt(0))+'</div>':'<div class="ic">'+(x.cat||dflt[x.type])+'</div>';
+  var sign=x.type==='in'?'+':(x.type==='buy'?'−':'');
+  var meta=[];if(x.type==='lent'&&x.who)meta.push(esc(x.who));if(x.catName)meta.push(esc(x.catName));meta.push(x.date);
+  var b='';
+  if(x.type==='lent')b+='<button data-a="pay" data-id="'+x.id+'">'+(x.paid?'↩️ رجّعها غير مسددة':'✅ اتسددت')+'</button>';
+  b+='<button data-a="del" data-id="'+x.id+'">🗑️ حذف</button>';
+  return '<div class="it k-'+x.type+(x.paid?' paid':'')+'">'+lead+'<div><div class="w">'+esc(x.why||x.catName||names[x.type])+'</div><div class="m">'+meta.join(' • ')+(x.paid?' • اتسددت':'')+'</div></div><div class="amt">'+sign+n(x.amt)+'</div><div class="act">'+b+'</div></div>';
+}
+
+function count(to){
+  var from=shown,t0=null,el=$('bal');
+  function fmt(v){return '<i>ج</i>'+(v<0?'−':'')+n(Math.abs(v))}
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches||from===to){el.innerHTML=fmt(to);shown=to;return}
+  function step(t){if(!t0)t0=t;var p=Math.min((t-t0)/900,1),e=1-Math.pow(1-p,3);el.innerHTML=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(step);else shown=to}
+  requestAnimationFrame(step);
+}
+
+function render(){
+  var inn=0,buy=0,lent=0;
+  items.forEach(function(x){if(x.type==='in')inn+=x.amt;else if(x.type==='buy')buy+=x.amt;else if(!x.paid)lent+=x.amt});
+  count(inn-buy-lent);
+  $('sIn').textContent=n(inn);$('sBuy').textContent=n(buy);$('sLent').textContent=n(lent);
+  var tot=inn+buy+lent||1;
+  $('pIn').style.width=inn/tot*100+'%';$('pBuy').style.width=buy/tot*100+'%';$('pLent').style.width=lent/tot*100+'%';
+
+  var list=items.slice().sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:b.id-a.id});
+  if(filter!=='all')list=list.filter(function(x){return x.type===filter});
+  var out='';
+  if(!list.length){
+    out='<div class="empty"><b>🌿</b>مفيش حاجة هنا لسه، سجّل أول عملية من فوق.</div>';
+  }else if(filter==='lent'){
+    var g={},order=[];
+    list.forEach(function(x){var k=(x.who||'بدون اسم').trim();if(!g[k]){g[k]=[];order.push(k)}g[k].push(x)});
+    out='<div class="sum"><span>إجمالي اللي عند الناس</span><b>'+n(lent)+' ج</b></div>';
+    order.forEach(function(k){
+      var t=g[k].reduce(function(s,x){return s+(x.paid?0:x.amt)},0);
+      out+='<div class="grp"><div class="gh"><div class="av">'+esc(k.charAt(0))+'</div><span>'+esc(k)+'</span><em>'+n(t)+' ج</em></div>'+g[k].map(row).join('')+'</div>';
+    });
+  }else{
+    var s=list.reduce(function(a,x){return a+x.amt},0);
+    out='<div class="sum"><span>'+(filter==='all'?'عدد العمليات':'إجمالي '+names[filter])+'</span><b>'+(filter==='all'?list.length:n(s)+' ج')+'</b></div>'+list.map(row).join('');
+  }
+  $('list').innerHTML=out;
+}
+
+function syncType(){
+  var t=document.querySelector('input[name=type]:checked').value;
+  $('whoBox').style.display=t==='lent'?'block':'none';
+  $('chipBox').style.display=t==='lent'?'none':'block';
+  $('why').placeholder=ph[t];
+  cat='';
+  if(t!=='lent')$('chips').innerHTML=cats[t].map(function(c){return '<button type="button" data-e="'+c[0]+'" data-n="'+c[1]+'">'+c[0]+' '+c[1]+'</button>'}).join('');
+}
+$('chips').onclick=function(e){
+  var b=e.target.closest('button');if(!b)return;
+  var on=b.classList.contains('on');
+  Array.prototype.forEach.call($('chips').children,function(c){c.classList.remove('on')});
+  if(on){cat=''}else{b.classList.add('on');cat=b.dataset.e+'|'+b.dataset.n}
+};
+$('save').onclick=function(){
+  var t=document.querySelector('input[name=type]:checked').value,amt=parseFloat($('amt').value);
+  if(!(amt>0)){$('amt').focus();return}
+  if(t==='lent'&&!$('who').value.trim()){$('who').focus();return}
+  var c=cat.split('|');
+  items.push({id:Date.now(),type:t,amt:amt,why:$('why').value.trim(),who:t==='lent'?$('who').value.trim():'',cat:t==='lent'?'':(c[0]||''),catName:t==='lent'?'':(c[1]||''),date:$('date').value||today(),paid:false});
+  store();$('amt').value='';$('why').value='';$('who').value='';syncType();render();
+};
+Array.prototype.forEach.call(document.querySelectorAll('input[name=type]'),function(r){r.onchange=syncType});
+$('tabs').onclick=function(e){
+  var b=e.target.closest('button');if(!b)return;filter=b.dataset.f;
+  Array.prototype.forEach.call($('tabs').children,function(c){c.classList.toggle('on',c===b)});render();
+};
+$('list').onclick=function(e){
+  var b=e.target.closest('button[data-a]');if(!b)return;var id=+b.dataset.id;
+  if(b.dataset.a==='del'){if(!confirm('تحذف العملية دي؟'))return;items=items.filter(function(x){return x.id!==id})}
+  else items.forEach(function(x){if(x.id===id)x.paid=!x.paid});
+  store();render();
+};
+$('wipe').onclick=function(){if(confirm('هتمسح كل البيانات نهائيا. متأكد؟')){items=[];store();render()}};
+$('theme').onclick=function(){
+  var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':!matchMedia('(prefers-color-scheme:light)').matches;
+  r.dataset.theme=dark?'light':'dark';
+};
+$('auto').checked=autoOn();
+$('auto').onchange=function(){try{localStorage.setItem(AK,this.checked?'1':'0')}catch(e){}};
+$('exp').onclick=backup;
+$('imp').onchange=function(){
+  var f=this.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{
+    var d=JSON.parse(r.result),arr=Array.isArray(d)?d:d.items,ids={};
+    items.forEach(function(x){ids[x.id]=1});
+    arr.forEach(function(x){if(x&&x.amt>0&&!ids[x.id])items.push(x)});
+    store();render();alert('تم الاستيراد ✅');
+  }catch(e){alert('الملف ده مش نسخة صالحة')}};
+  r.readAsText(f);this.value='';
+};
+var dp=null,standalone=matchMedia('(display-mode:standalone)').matches||navigator.standalone;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;if(!standalone)$('inst').hidden=false});
+$('inst').onclick=function(){if(dp){dp.prompt();dp=null;$('inst').hidden=true}};
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)$('iosHint').hidden=false;
+if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(function(){});
+$('cp').onclick=function(){
+  var t=JSON.stringify({app:'masrofi',v:1,items:items});$('ta').value=t;
+  function sel(){$('ta').focus();$('ta').select();alert('حدد النص وانسخه يدويا')}
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){alert('اتنسخت ✅ دلوقتي الصقها في النسخة التانية')},sel);else sel();
+};
+$('pasteImp').onclick=function(){
+  try{
+    var d=JSON.parse($('ta').value.trim()),arr=Array.isArray(d)?d:d.items,ids={},c=0;
+    items.forEach(function(x){ids[x.id]=1});
+    arr.forEach(function(x){if(x&&x.amt>0&&!ids[x.id]){items.push(x);c++}});
+    store();render();$('ta').value='';alert('تم استيراد '+c+' عملية ✅');
+  }catch(e){alert('النص ده مش بيانات صالحة')}
+};
+$('date').value=today();load();syncType();render();
+})();
+</script>
+</body>
+</html>
